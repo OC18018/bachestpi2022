@@ -1,4 +1,4 @@
-package sv.edu.ues.occ.ingenieria.tpi135.bachestpi;
+package sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

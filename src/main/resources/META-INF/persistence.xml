@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
-    <!-- Define Persistence Unit -->
-    <persistence-unit name="my_persistence_unit">
-        
-    </persistence-unit>
+<persistence version="2.2" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+  <!-- Define Persistence Unit -->
+  <persistence-unit name="BACHES-PU" transaction-type="JTA">
+    <jta-data-source>jdbc/baches</jta-data-source>
+    <class>sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.TipoObjeto</class>
+    <class>sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.Objeto</class>
+    <class>sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.Ruta</class>
+    <class>sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.Estado</class>
+    <class>sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.ObjetoEstado</class>
+    <properties>
+    </properties>
+  </persistence-unit>
 </persistence>
