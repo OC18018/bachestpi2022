@@ -26,7 +26,7 @@ public abstract class abstractDataAccess<T> implements Serializable {
     public abstractDataAccess(Class clase) {
         this.clase = clase;
     }
-    
+
     public abstract EntityManager getEntityManager();
 
     public void crear(T nuevo) throws IllegalArgumentException, IllegalStateException {
@@ -48,60 +48,60 @@ public abstract class abstractDataAccess<T> implements Serializable {
         throw new IllegalArgumentException();
 
     }
-    
-    public T findById(final Object id) throws IllegalArgumentException,IllegalStateException{
-        if (id!=null){
+
+    public T findById(final Object id) throws IllegalArgumentException, IllegalStateException {
+        if (id != null) {
             EntityManager em = null;
             try {
-                em=this.getEntityManager();
+                em = this.getEntityManager();
             } catch (Exception e) {
             }
-            if (em != null){
+            if (em != null) {
                 return (T) em.find(clase, id);
             }
             throw new IllegalStateException("no se puede obtener un ambito de persistencia");
         }
-        throw  new IllegalArgumentException();
+        throw new IllegalArgumentException();
     }
-    
-    
-    public List<T> findAll(){
+
+    public List<T> findAll() {
         EntityManager em = null;
         try {
             em = this.getEntityManager();
         } catch (Exception e) {
         }
-        if (em != null){
-         TypedQuery q = this.generarConsultaBase(em);
-         List salida = q.getResultList();
-         if (salida != null){
-             return salida;
-         }
-         return Collections.EMPTY_LIST;
+        if (em != null) {
+            TypedQuery q = this.generarConsultaBase(em);
+            List salida = q.getResultList();
+            if (salida != null) {
+                return salida;
+            }
+            return Collections.EMPTY_LIST;
         }
         throw new IllegalStateException("no se puede obtener un ambito de persistencia");
     }
-        public List<T> findRange(int first,int pageSize){
+
+    public List<T> findRange(int first, int pageSize) {
         EntityManager em = null;
         try {
             em = this.getEntityManager();
         } catch (Exception e) {
         }
-        if (em != null){
-         TypedQuery q = this.generarConsultaBase(em);
-         q.setFirstResult(first);
-         q.setMaxResults(pageSize);
-         List salida = q.getResultList();
-         if (salida != null){
-             return salida;
-         }
-         return Collections.EMPTY_LIST;
+        if (em != null) {
+            TypedQuery q = this.generarConsultaBase(em);
+            q.setFirstResult(first);
+            q.setMaxResults(pageSize);
+            List salida = q.getResultList();
+            if (salida != null) {
+                return salida;
+            }
+            return Collections.EMPTY_LIST;
         }
         throw new IllegalStateException("no se puede obtener un ambito de persistencia");
     }
-    
-    protected TypedQuery generarConsultaBase(EntityManager em){
-        if (em != null){
+
+    protected TypedQuery generarConsultaBase(EntityManager em) {
+        if (em != null) {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery cq = cb.createQuery(clase);
             Root<T> raiz = cq.from(clase);
@@ -110,19 +110,63 @@ public abstract class abstractDataAccess<T> implements Serializable {
         }
         throw new IllegalArgumentException();
     }
-    
-    public Long contar() throws IllegalStateException{
+
+    public Long contar() throws IllegalStateException {
         EntityManager em = null;
         try {
             em = this.getEntityManager();
         } catch (Exception e) {
         }
-        if (em != null){
+        if (em != null) {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Long> cq = cb.createQuery(Long.class);
             cq.select(cb.count(cq.from(clase)));
             return em.createQuery(cq).getSingleResult();
         }
         throw new IllegalArgumentException();
+    }
+
+    public void Modificar(T nuevo, long id) throws IllegalArgumentException, IllegalStateException {
+        if (nuevo != null) {
+            EntityManager em = null;
+            try {
+                em = this.getEntityManager();
+            } catch (Exception e) {
+                Logger.getLogger(getClass().getName()).log(Level.SEVERE, "entity nulo");
+            }
+            if (em != null) {
+                //codigo para modificar
+                T edit = (T) em.find(clase, id);
+                edit = em.merge(nuevo);
+                return;
+            } else {
+                throw new IllegalStateException();
+            }
+
+        }
+        throw new IllegalArgumentException();
+
+    }
+
+    public void Eliminar(int id) throws IllegalArgumentException, IllegalStateException {
+        if (id != 0) {
+            EntityManager em = null;
+            try {
+                em = this.getEntityManager();
+            } catch (Exception e) {
+                Logger.getLogger(getClass().getName()).log(Level.SEVERE, "entity nulo");
+            }
+            if (em != null) {
+                //codigo para Eliminar
+                T edit = (T) em.find(clase, id);
+                em.remove(edit);
+                return;
+            } else {
+                throw new IllegalStateException();
+            }
+
+        }
+        throw new IllegalArgumentException();
+
     }
 }
