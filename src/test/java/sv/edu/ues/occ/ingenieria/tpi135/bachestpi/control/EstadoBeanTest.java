@@ -32,6 +32,94 @@ public class EstadoBeanTest {
         EntityManager mockEM=Mockito.mock(EntityManager.class);
         cut.em=mockEM;
         cut.crear(nuevo);
+        
+        EstadoBean espia = Mockito.spy(EstadoBean.class);
+        espia.em=mockEM;
+        
+        Mockito.when(espia.getEntityManager()).thenThrow(NullPointerException.class);
+        try {
+            espia.crear(nuevo);
+        } catch (Exception e) {
+        }
+        Mockito.verify(espia,Mockito.times(1)).getEntityManager();
+    }
+    
+    @Test
+    public void testFindById(){
+        System.out.println("findById");
+        Integer id = 1;
+        EntityManager mockEM=Mockito.mock(EntityManager.class);
+        EstadoBean cut = new EstadoBean();
+        Estado esperado = new Estado();
+        Mockito.when(mockEM.find(Estado.class, id)).thenReturn(esperado);
+        assertThrows(IllegalArgumentException.class, () -> {
+            cut.findById(null);
+        });
+        assertThrows(IllegalStateException.class, ()->{
+            cut.findById(id);
+        });
+        
+        cut.em=mockEM;
+        Estado encontrado = cut.findById(id);
+        assertNotNull(encontrado);
+        assertEquals(esperado, encontrado );
+        
+        EstadoBean espia = Mockito.spy(EstadoBean.class);
+        espia.em=mockEM;
+        
+        Mockito.when(espia.getEntityManager()).thenThrow(NullPointerException.class);
+        try {
+            espia.findById(id);
+        } catch (Exception e) {
+        }
+        Mockito.verify(espia,Mockito.times(1)).getEntityManager();
+        
+    }
+
+    /**
+     * Test of findAll method, of class EstadoBean.
+     */
+    @Test
+    public void testFindAll() throws Exception {
+        System.out.println("findAll");
+        
+    }
+
+    /**
+     * Test of findRange method, of class EstadoBean.
+     */
+    @Test
+    public void testFindRange() throws Exception {
+        System.out.println("findRange");
+        
+        
+    }
+
+    /**
+     * Test of contar method, of class EstadoBean.
+     */
+    @Test
+    public void testContar() throws Exception {
+        System.out.println("contar");
+        
+    }
+
+    /**
+     * Test of Modificar method, of class EstadoBean.
+     */
+    @Test
+    public void testModificar() throws Exception {
+        System.out.println("Modificar");
+        
+    }
+
+    /**
+     * Test of Eliminar method, of class EstadoBean.
+     */
+    @Test
+    public void testEliminar() throws Exception {
+        System.out.println("Eliminar");
+        
     }
     
 }
