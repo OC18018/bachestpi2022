@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <jakartaee>8.0.0</jakartaee>
+        <mockito-core-version>3.1.0</mockito-core-version>
         <jacoco.version>0.8.5</jacoco.version>
     </properties>
     
@@ -49,8 +50,8 @@
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.9.5</version>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito-core-version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
