@@ -5,6 +5,9 @@
 package sv.edu.ues.occ.ingenieria.tpi135.bachestpi.control;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.Mockito;
@@ -101,6 +104,37 @@ public class EstadoBeanTest {
     @Test
     public void testContar() throws Exception {
         System.out.println("contar");
+        Long esperado = Long.valueOf(1);
+        EntityManager mockEM = Mockito.mock(EntityManager.class);
+        CriteriaBuilder mockCB = Mockito.mock(CriteriaBuilder.class);
+        CriteriaQuery mockCQ = Mockito.mock(CriteriaQuery.class);
+        TypedQuery mockTQ = Mockito.mock(TypedQuery.class);
+        
+        Mockito.when(mockEM.getCriteriaBuilder()).thenReturn(mockCB);
+        Mockito.when(mockCB.createQuery(Long.class)).thenReturn(mockCQ);
+        Mockito.when(mockEM.createQuery(mockCQ)).thenReturn(mockTQ);
+        Mockito.when(mockTQ.getSingleResult()).thenReturn(esperado);
+        EstadoBean cut = new EstadoBean();
+        
+        assertThrows(IllegalArgumentException.class, ()->{
+            cut.contar();
+        });
+        
+        cut.em = mockEM;
+        Long resultado = cut.contar();
+        assertNotNull(resultado);
+        assertEquals(esperado, resultado);
+        
+        
+        EstadoBean espia = Mockito.spy(EstadoBean.class);
+        espia.em=mockEM;
+        
+        Mockito.when(espia.getEntityManager()).thenThrow(NullPointerException.class);
+        try {
+            espia.contar();
+        } catch (Exception e) {
+        }
+        Mockito.verify(espia,Mockito.times(1)).getEntityManager();
         
     }
 
