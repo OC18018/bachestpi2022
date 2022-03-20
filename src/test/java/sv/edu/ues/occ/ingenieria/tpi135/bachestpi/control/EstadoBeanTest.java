@@ -147,7 +147,32 @@ public class EstadoBeanTest {
     @Test
     public void testModificar() throws Exception {
         System.out.println("Modificar");
+        int id=1;
+        EntityManager mockEM = Mockito.mock(EntityManager.class);
         
+        Estado nuevo=new Estado(2);
+        EstadoBean cut=new EstadoBean();
+
+        
+        assertThrows(IllegalArgumentException.class, ()->{
+        cut.Modificar(null, id);
+        });
+
+        assertThrows(IllegalStateException.class, ()->{
+        cut.Modificar(nuevo, id);
+        });
+
+        cut.em=mockEM;
+        cut.Modificar(nuevo, id);
+
+        EstadoBean espia = Mockito.spy(EstadoBean.class);
+        espia.em=mockEM;
+        Mockito.when(espia.getEntityManager()).thenThrow(NullPointerException.class);
+        try {
+            espia.Modificar(nuevo, id);
+        } catch (Exception e) {
+        }
+        Mockito.verify(espia,Mockito.times(1)).getEntityManager();
     }
 
     /**
