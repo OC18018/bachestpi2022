@@ -4,10 +4,13 @@
  */
 package sv.edu.ues.occ.ingenieria.tpi135.bachestpi.control;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.Mockito;
@@ -85,7 +88,7 @@ public class EstadoBeanTest {
     @Test
     public void testFindAll() throws Exception {
         System.out.println("findAll");
-        
+               
     }
 
     /**
@@ -153,6 +156,26 @@ public class EstadoBeanTest {
     @Test
     public void testEliminar() throws Exception {
         System.out.println("Eliminar");
+        int id=1;
+        EntityManager mockEM = Mockito.mock(EntityManager.class);
+        
+        EstadoBean cut=new EstadoBean();
+        assertThrows(IllegalArgumentException.class, ()->{
+        cut.Eliminar(0);
+        });
+        
+        cut.em=mockEM;
+        cut.Eliminar(id);
+        
+        EstadoBean espia = Mockito.spy(EstadoBean.class);
+        espia.em=mockEM;
+        
+        Mockito.when(espia.getEntityManager()).thenThrow(NullPointerException.class);
+        try {
+            espia.Eliminar(id);
+        } catch (Exception e) {
+        }
+        Mockito.verify(espia,Mockito.times(1)).getEntityManager();
         
     }
     
