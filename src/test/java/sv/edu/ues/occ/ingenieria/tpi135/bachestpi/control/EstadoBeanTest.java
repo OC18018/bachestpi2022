@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.Estado;
@@ -179,29 +180,40 @@ public class EstadoBeanTest {
      * Test of Eliminar method, of class EstadoBean.
      */
     @Test
-    public void testEliminar() throws Exception {
-        System.out.println("Eliminar");
-        int id=1;
+    public void testeliminar() throws Exception {
+        System.out.println("eliminar");
         EntityManager mockEM = Mockito.mock(EntityManager.class);
-        
-        EstadoBean cut=new EstadoBean();
-        assertThrows(IllegalArgumentException.class, ()->{
-        cut.Eliminar(0);
-        });
-        
-        cut.em=mockEM;
-        cut.Eliminar(id);
+        EstadoBean cut = new EstadoBean();
+        cut.em = mockEM;
+        Estado eliminado = new Estado(1);
+        cut.eliminar(eliminado);
+        Mockito.verify(mockEM, Mockito.times(1)).remove(Matchers.any());
+
+        try {
+            cut.eliminar(null);
+            fail("el argumento era nulo");
+
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            cut.em = null;
+            cut.eliminar(eliminado);
+            fail("el entity era nulo");
+
+        } catch (IllegalStateException e) {
+
+        }
         
         EstadoBean espia = Mockito.spy(EstadoBean.class);
         espia.em=mockEM;
-        
         Mockito.when(espia.getEntityManager()).thenThrow(NullPointerException.class);
         try {
-            espia.Eliminar(id);
+            espia.eliminar(eliminado);
         } catch (Exception e) {
         }
         Mockito.verify(espia,Mockito.times(1)).getEntityManager();
-        
+
     }
     
 }
