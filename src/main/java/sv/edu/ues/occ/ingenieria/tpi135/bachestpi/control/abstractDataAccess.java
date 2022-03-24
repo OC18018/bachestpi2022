@@ -126,7 +126,7 @@ public abstract class abstractDataAccess<T> implements Serializable {
         throw new IllegalArgumentException();
     }
 
-    public void Modificar(T nuevo, long id) throws IllegalArgumentException, IllegalStateException {
+    public void Modificar(T nuevo) throws IllegalArgumentException, IllegalStateException {
         if (nuevo != null) {
             EntityManager em = null;
             try {
@@ -136,8 +136,7 @@ public abstract class abstractDataAccess<T> implements Serializable {
             }
             if (em != null) {
                 //codigo para modificar
-                T edit = (T) em.find(clase, id);
-                edit = em.merge(nuevo);
+                em.merge(nuevo);
                 return;
             } else {
                 throw new IllegalStateException();
