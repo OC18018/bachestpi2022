@@ -138,7 +138,41 @@ public class EstadoBeanTest {
     @Test
     public void testFindRange() throws Exception {
         System.out.println("findRange");
+        
+        EntityManager mockEM = Mockito.mock(EntityManager.class);
+        CriteriaBuilder mockCB = Mockito.mock(CriteriaBuilder.class);
+        CriteriaQuery mockCQ = Mockito.mock(CriteriaQuery.class);
+        Root mockR = Mockito.mock(Root.class);
+        TypedQuery mockTQ = Mockito.mock(TypedQuery.class);
+        
+        Mockito.when(mockEM.getCriteriaBuilder()).thenReturn(mockCB);
+        Mockito.when(mockCB.createQuery(Mockito.any())).thenReturn(mockCQ);
+        Mockito.when(mockCQ.from(Object.class)).thenReturn(mockR);
+        Mockito.when(mockEM.createQuery(mockCQ)).thenReturn(mockTQ);
+        Mockito.when(mockTQ.getResultList()).thenReturn(null);
+        
+        EstadoBean cut = new EstadoBean();
 
+        assertThrows(IllegalStateException.class, ()->{
+            cut.findRange(1, 2);
+        });
+        
+        EstadoBean espia = Mockito.spy(EstadoBean.class);
+        espia.em = mockEM;
+
+        Mockito.when(espia.getEntityManager()).thenThrow(NullPointerException.class);
+        try {
+            espia.findRange(1, 2);
+        } catch (Exception e) {
+        }
+
+        Mockito.verify(espia, Mockito.times(1)).getEntityManager();
+        
+        cut.em = mockEM;
+        cut.findRange(1, 2);
+
+        Mockito.when(mockTQ.getResultList()).thenReturn(new ArrayList());
+        cut.findRange(1, 2);
         
     }
 
