@@ -14,7 +14,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.Estado;
+import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.Estado;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -29,7 +29,7 @@ public class EstadoIT {
     @Deployment
     public static WebArchive crearDespliegue() {
         WebArchive salida = ShrinkWrap.create(WebArchive.class)
-                .addPackage("sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity")
+                .addPackage("sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity")
                 .addAsResource("persistence-arquillian.xml")
                 .addClass(abstractDataAccess.class)
                 .addClass(EstadoBean.class)

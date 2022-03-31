@@ -11,7 +11,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.Ruta;
+import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.Ruta;
 
 /**
  *
@@ -21,7 +21,7 @@ import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.Ruta;
 @LocalBean
 public class RutaBean extends abstractDataAccess<Ruta> implements Serializable {
 
-    @PersistenceContext(unitName = "baches-PU")
+    @PersistenceContext(unitName = "BACHES-PU")
     EntityManager em;
 
     public RutaBean() {

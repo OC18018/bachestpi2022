@@ -12,7 +12,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.TipoObjeto;
+import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.TipoObjeto;
 
 /**
  *
@@ -22,7 +22,7 @@ import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.TipoObjeto;
 @LocalBean
 public class TipoObjetoBean extends abstractDataAccess<TipoObjeto> implements Serializable {
 
-    @PersistenceContext(unitName = "baches-PU")
+    @PersistenceContext(unitName = "BACHES-PU")
     EntityManager em;
 
     public TipoObjetoBean() {

@@ -3,11 +3,11 @@
   <!-- Define Persistence Unit -->
   <persistence-unit name="BACHES-PU" transaction-type="JTA">
     <jta-data-source>jdbc/baches</jta-data-source>
-    <class>sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.TipoObjeto</class>
-    <class>sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.Objeto</class>
-    <class>sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.Ruta</class>
-    <class>sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.Estado</class>
-    <class>sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.ObjetoEstado</class>
+    <class>sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.Estado</class>
+    <class>sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.Ruta</class>
+    <class>sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.TipoObjeto</class>
+    <class>sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.ObjetoEstado</class>
+    <class>sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.Objeto</class>
     <properties>
     </properties>
   </persistence-unit>

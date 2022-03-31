@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
-import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.Estado;
+import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.Estado;
 /**
  *
  * @author armandop444
