@@ -21,7 +21,7 @@ import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.Ruta;
 @LocalBean
 public class RutaBean extends abstractDataAccess<Ruta> implements Serializable {
 
-    @PersistenceContext(unitName = "baches-PU")
+    @PersistenceContext(unitName = "BACHES-PU")
     EntityManager em;
 
     public RutaBean() {
