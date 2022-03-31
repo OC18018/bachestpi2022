@@ -6,10 +6,13 @@ package sv.edu.ues.occ.ingenieria.tpi135.bachestpi.control;
 
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.Objeto;
 
 /**
@@ -19,7 +22,7 @@ import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.Objeto;
 @Stateless
 @LocalBean
 public class ObjetoBean extends abstractDataAccess<Objeto> implements Serializable {
-    @PersistenceContext(unitName = "baches-PU")
+    @PersistenceContext(unitName = "BACHES-PU")
     EntityManager em;
 
     public ObjetoBean() {
@@ -29,6 +32,28 @@ public class ObjetoBean extends abstractDataAccess<Objeto> implements Serializab
     @Override
     public EntityManager getEntityManager() {
     return em;
+    }
+    
+        public List<Objeto> findByIdTipoObjeto(final Integer idTipoObjeto, int firts,int pageSize){
+        if (this.em!=null && idTipoObjeto!=null) {
+            Query q=em.createNamedQuery("Objeto.findByTipoObjeto");
+            q.setParameter("idTipoObjeto", idTipoObjeto);
+            q.setFirstResult(firts);
+            q.setMaxResults(pageSize);
+            return q.getResultList();
+            
+        }
+        return Collections.EMPTY_LIST;
+    }
+    public int count(final Integer idTipoObjeto){
+            if (this.em!=null && idTipoObjeto!=null) {
+            Query q=em.createNamedQuery("Objeto.countByTipoObjeto");
+            q.setParameter("idTipoObjeto", idTipoObjeto);
+            
+            return ((Long) q.getSingleResult()).intValue();
+            
+        }
+        return 0;
     }
     
 }
