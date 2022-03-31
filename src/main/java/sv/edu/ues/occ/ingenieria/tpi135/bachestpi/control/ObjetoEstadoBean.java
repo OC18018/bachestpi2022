@@ -21,7 +21,7 @@ import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.ObjetoEstado;
 @LocalBean
 public class ObjetoEstadoBean extends abstractDataAccess<ObjetoEstado> implements Serializable {
 
-    @PersistenceContext(unitName = "BACHES-PU")
+    @PersistenceContext(unitName = "baches-PU")
     EntityManager em;
 
     public ObjetoEstadoBean() {

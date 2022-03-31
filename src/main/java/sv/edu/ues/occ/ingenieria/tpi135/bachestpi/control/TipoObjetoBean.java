@@ -22,7 +22,7 @@ import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.entity.TipoObjeto;
 @LocalBean
 public class TipoObjetoBean extends abstractDataAccess<TipoObjeto> implements Serializable {
 
-    @PersistenceContext(unitName = "BACHES-PU")
+    @PersistenceContext(unitName = "baches-PU")
     EntityManager em;
 
     public TipoObjetoBean() {
