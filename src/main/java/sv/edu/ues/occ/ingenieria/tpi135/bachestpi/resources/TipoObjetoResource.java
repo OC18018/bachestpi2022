@@ -32,7 +32,7 @@ public class TipoObjetoResource {
         Long total = toBean.contar();
 
         return Response.ok(registros)
-                .header("Total-Registro", total)
+                .header("Total-Registros", total)
                 .build();
 
     }
