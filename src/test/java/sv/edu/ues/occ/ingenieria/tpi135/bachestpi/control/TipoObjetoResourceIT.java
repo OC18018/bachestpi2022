@@ -24,7 +24,10 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.TipoObjeto;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.JakartaRestConfiguration;
@@ -35,8 +38,9 @@ import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.TipoObjetoResource;
  * @author armandop444
  */
 @ExtendWith(ArquillianExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TipoObjetoResourceIT {
-    
+
     @Deployment
     public static WebArchive crearDespliegue() {
         WebArchive salida = ShrinkWrap.create(WebArchive.class)
@@ -52,21 +56,23 @@ public class TipoObjetoResourceIT {
         System.out.println(salida.toString(true));
         return salida;
     }
-    
+
     @ArquillianResource
     URL url;
-    
+
     @Test
     @RunAsClient
-    public void testFindAll(){
+    @Order(2)
+    public void testFindAll() {
         System.out.println("\n\n");
         System.out.println("\n\n");
         System.out.println("--------------------------------------------------------------");
         System.out.println("findAllTipoObjeto");
-        int resultadoEsperado=200;
-        Client cliente=ClientBuilder.newClient();
-        WebTarget target= cliente.target(url.toString()+"resources/");
-        Response respuesta = target.path("tipoobjeto").request("application/json").get(); 
+        
+        int resultadoEsperado = 200;
+        Client cliente = ClientBuilder.newClient();
+        WebTarget target = cliente.target(url.toString() + "resources/");
+        Response respuesta = target.path("tipoobjeto").request("application/json").get();
         assertEquals(resultadoEsperado, respuesta.getStatus());
         String totalTexto = respuesta.getHeaderString("Total-Registros");
         assertNotEquals(Integer.valueOf(0), Integer.valueOf(totalTexto));
@@ -74,31 +80,32 @@ public class TipoObjetoResourceIT {
         JsonReader lector = Json.createReader(new StringReader(cuerpoString));
         JsonArray listaJson = lector.readArray();
         int totalRegistros = listaJson.size();
-        assertTrue(totalRegistros>0);
+        assertTrue(totalRegistros > 0);
         System.out.println("\n\n");
         System.out.println("\n\n");
-        for(int i=0; i< listaJson.size(); i++){
+        for (int i = 0; i < listaJson.size(); i++) {
             JsonObject objeto = listaJson.getJsonObject(i);
-            System.out.println("ID: " + objeto.getInt("idTipoObjeto"));
+            System.out.println("ID: " + objeto.getInt("idTipoObjeto") + " Activo:" + objeto.getBoolean("activo"));
         }
         System.out.println("\n\n");
         System.out.println("\n\n");
     }
-    
+
     @Test
     @RunAsClient
-    public void crear() {
+    @Order(1)
+    public void testCrear() {
         System.out.println("\n\n");
         System.out.println("\n\n");
-        System.out.println("--------------------------------------------------------------");        
+        System.out.println("--------------------------------------------------------------");
         System.out.println("Crear TipoObjeto");
         TipoObjeto nuevo = new TipoObjeto();
         nuevo.setActivo(Boolean.TRUE);
 
-        int resultadoEsperado=200;
-        Client cliente=ClientBuilder.newClient();
-        WebTarget target= cliente.target(url.toString()+"resources/");
-        Response respuesta = target.path("tipoobjeto").request("application/json").post(Entity.entity(nuevo, MediaType.APPLICATION_JSON)); 
+        int resultadoEsperado = 200;
+        Client cliente = ClientBuilder.newClient();
+        WebTarget target = cliente.target(url.toString() + "resources/");
+        Response respuesta = target.path("tipoobjeto").request("application/json").post(Entity.entity(nuevo, MediaType.APPLICATION_JSON));
         assertEquals(resultadoEsperado, respuesta.getStatus());
         String registro = respuesta.getHeaderString("Registro-Creado");
         assertNotEquals(null, registro);
@@ -107,8 +114,38 @@ public class TipoObjetoResourceIT {
         JsonObject objeto = lector.readObject();
         System.out.println("\n\n");
         System.out.println("\n\n");
-        System.out.println("Creado "+ objeto);
+        System.out.println("Creado " + objeto);
         System.out.println("\n\n");
-        System.out.println("\n\n");       
+        System.out.println("\n\n");
+    }
+
+    @Test
+    @RunAsClient
+    @Order(3)
+    public void testModificar() {
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        System.out.println("--------------------------------------------------------------");
+        System.out.println("Modificar TipoObjeto");
+        TipoObjeto nuevo = new TipoObjeto();
+        nuevo.setIdTipoObjeto(3);
+        nuevo.setActivo(Boolean.FALSE);
+
+        int resultadoEsperado = 200;
+        Client cliente = ClientBuilder.newClient();
+        WebTarget target = cliente.target(url.toString() + "resources/");
+        Response respuesta = target.path("tipoobjeto").request("application/json").put(Entity.entity(nuevo, MediaType.APPLICATION_JSON));
+        assertEquals(resultadoEsperado, respuesta.getStatus());
+        String registro = respuesta.getHeaderString("Modificado");
+        assertNotEquals(null, registro);
+        String cuerpoString = respuesta.readEntity(String.class);
+        JsonReader lector = Json.createReader(new StringReader(cuerpoString));
+        JsonObject objeto = lector.readObject();
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        System.out.println("Modificado " + objeto);
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+
     }
 }
