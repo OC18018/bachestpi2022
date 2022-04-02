@@ -42,7 +42,6 @@ public class TipoObjetoResource {
     }
 
     @POST
-    @Produces({"application/json; charset=UTF-8"})
     public Response crear(TipoObjeto nuevo) {
         toBean.crear(nuevo);
         return Response.ok(nuevo)
@@ -57,5 +56,16 @@ public class TipoObjetoResource {
                 .header("Modificado", edit)
                 .build();
 
+    }
+
+    @DELETE
+    @Path("{userId}")
+    public Response eliminar(@PathParam("userId") int id) {
+        TipoObjeto eliminar = new TipoObjeto();
+        eliminar.setIdTipoObjeto(id);
+        toBean.eliminar(eliminar);
+        return Response.ok(eliminar)
+                .header("ID-eliminado", id)
+                .build();
     }
 }
