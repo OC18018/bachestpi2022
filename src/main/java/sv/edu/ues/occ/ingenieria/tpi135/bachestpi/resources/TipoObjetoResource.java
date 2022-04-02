@@ -40,14 +40,22 @@ public class TipoObjetoResource {
                 .build();
 
     }
-    
+
     @POST
     @Produces({"application/json; charset=UTF-8"})
     public Response crear(TipoObjeto nuevo) {
         toBean.crear(nuevo);
         return Response.ok(nuevo)
-                .header("Registro-Creado",nuevo)
+                .header("Registro-Creado", nuevo)
                 .build();
     }
-    
+
+    @PUT
+    public Response modificar(TipoObjeto edit) {
+        toBean.Modificar(edit);
+        return Response.ok(edit)
+                .header("Modificado", edit)
+                .build();
+
+    }
 }
