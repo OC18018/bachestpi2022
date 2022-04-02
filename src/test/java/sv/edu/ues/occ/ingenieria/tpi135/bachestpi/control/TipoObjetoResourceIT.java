@@ -12,7 +12,9 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -24,6 +26,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.TipoObjeto;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.JakartaRestConfiguration;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.TipoObjetoResource;
 
@@ -80,5 +83,32 @@ public class TipoObjetoResourceIT {
         }
         System.out.println("\n\n");
         System.out.println("\n\n");
+    }
+    
+    @Test
+    @RunAsClient
+    public void crear() {
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        System.out.println("--------------------------------------------------------------");        
+        System.out.println("Crear TipoObjeto");
+        TipoObjeto nuevo = new TipoObjeto();
+        nuevo.setActivo(Boolean.TRUE);
+
+        int resultadoEsperado=200;
+        Client cliente=ClientBuilder.newClient();
+        WebTarget target= cliente.target(url.toString()+"resources/");
+        Response respuesta = target.path("tipoobjeto").request("application/json").post(Entity.entity(nuevo, MediaType.APPLICATION_JSON)); 
+        assertEquals(resultadoEsperado, respuesta.getStatus());
+        String registro = respuesta.getHeaderString("Registro-Creado");
+        assertNotEquals(null, registro);
+        String cuerpoString = respuesta.readEntity(String.class);
+        JsonReader lector = Json.createReader(new StringReader(cuerpoString));
+        JsonObject objeto = lector.readObject();
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        System.out.println("Creado "+ objeto);
+        System.out.println("\n\n");
+        System.out.println("\n\n");       
     }
 }
