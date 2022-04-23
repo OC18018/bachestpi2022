@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo 'Testing..desde hook'
+                echo 'Testing..desde hook 2'
             }
         }
         stage('Deploy') {
