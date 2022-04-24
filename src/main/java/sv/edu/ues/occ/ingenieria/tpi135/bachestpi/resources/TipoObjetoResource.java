@@ -5,6 +5,7 @@
 package sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -67,5 +68,11 @@ public class TipoObjetoResource {
         return Response.ok(eliminar)
                 .header("ID-eliminado", id)
                 .build();
+    }
+    
+    @GET
+    @Path("contar")
+    public CompletableFuture<Long> contar(){
+        return CompletableFuture.supplyAsync(toBean::contar);
     }
 }
