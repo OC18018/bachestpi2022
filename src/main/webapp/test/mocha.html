@@ -12,27 +12,17 @@
     </div>
     <script src="../js/lib/mocha/mocha.js"></script>
     <script src="../js/lib/chai/chai.js"></script>
+
     <script>
         mocha.setup("bdd");
         var assert=chai.assert;
         var expect=chai.expect;
     </script>
-    <script>
-        describe("Paridad",function(){
-            let numero;
-            it("Debeia tener un numero",function(){
-                numero=5;
-                assert.isDefined(numero);
-            });
-            it("Deberia ser par",function(){
-                let esperado=0;
-                let resultado=numero%2;
-                assert.equal(resultado,esperado);
-            });
-        });
+
+    <script type="module" src="control/TipoObjetoDataStoreTest.js">
     </script>
 
-    <script>
+    <script type="module">
         mocha.run();
     </script>
 </body>
