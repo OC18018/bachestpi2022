@@ -34,4 +34,13 @@ public class TipoObjetoBean extends abstractDataAccess<TipoObjeto> implements Se
     return em;
     }
     
+    @Override
+    public Long contar() throws IllegalStateException {
+        try{
+            Thread.sleep(2000);
+        }catch (Exception ex){
+            System.out.println("Error "+ ex);
+        }
+        return super.contar();
+    }   
 }
