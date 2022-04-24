@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../js/lib/mocha/mocha.css">
+</head>
+<body>
+    <div id="mocha">
+    </div>
+    <script src="../js/lib/mocha/mocha.js"></script>
+    <script src="../js/lib/chai/chai.js"></script>
+    <script>
+        mocha.setup("bdd");
+        var assert=chai.assert;
+        var expect=chai.expect;
+    </script>
+    <script>
+        describe("Paridad",function(){
+            let numero;
+            it("Debeia tener un numero",function(){
+                numero=5;
+                assert.isDefined(numero);
+            });
+            it("Deberia ser par",function(){
+                let esperado=0;
+                let resultado=numero%2;
+                assert.equal(resultado,esperado);
+            });
+        });
+    </script>
+
+    <script>
+        mocha.run();
+    </script>
+</body>
+</html>
