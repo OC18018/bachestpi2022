@@ -9,12 +9,14 @@ import java.util.concurrent.CompletableFuture;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.control.TipoObjetoBean;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.TipoObjeto;
@@ -30,8 +32,7 @@ public class TipoObjetoResource {
     @Inject
     TipoObjetoBean toBean;
 
-    @GET
-    @Produces({"application/json; charset=UTF-8"})
+    
     public Response findAll() {
         List<TipoObjeto> registros = toBean.findAll();
         Long total = toBean.contar();
@@ -67,6 +68,22 @@ public class TipoObjetoResource {
         toBean.eliminar(eliminar);
         return Response.ok(eliminar)
                 .header("ID-eliminado", id)
+                .build();
+    }
+    
+    @GET
+    @Produces({"application/json; charset=UTF-8"})
+    public Response findRange(
+            @QueryParam(value = "first") 
+            @DefaultValue(value = "0")
+            int first,
+            @QueryParam(value = "pagesize") 
+            @DefaultValue(value="50")
+            int pageSize) {
+        List<TipoObjeto> registros = toBean.findRange(first, pageSize);
+        Long total = toBean.contar();
+        return Response.ok(registros)
+                .header("Total-Registros", total)
                 .build();
     }
     
