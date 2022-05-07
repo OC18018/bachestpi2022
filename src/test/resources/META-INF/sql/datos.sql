@@ -8,3 +8,6 @@ INSERT INTO tipo_objeto (activo, fecha_creacion) VALUES(true,'2022-03-31');
 INSERT INTO objeto_estado (id_estado, id_objeto, fecha_alcanzado,observaciones) VALUES(2,1,'2022-05-08','estamos en IT');
 INSERT INTO objeto_estado (id_estado, id_objeto, fecha_alcanzado,observaciones) VALUES(3,2,'2022-05-09','estamos en IT');
 INSERT INTO objeto_estado (id_estado, id_objeto, fecha_alcanzado,observaciones) VALUES(4,3,'2022-05-10','estamos en IT');
+INSERT INTO objeto (id_tipo_objeto, nombreobservaciones) VALUES (2,"agregado en IT","es de .sql");
+INSERT INTO objeto (id_tipo_objeto, nombreobservaciones) VALUES (3,"agregado en IT","es de .sql");
+INSERT INTO objeto (id_tipo_objeto, nombre, observaciones) VALUES (4,"agregado en IT","es de .sql");

@@ -53,7 +53,7 @@ public class ObjetoResource implements Serializable {
     }
 
     @POST
-    public Response crea(Objeto nuevo) {
+    public Response crear(Objeto nuevo) {
         toBean.crear(nuevo);
         return Response.ok(nuevo)
                 .header("Registro-Creado", nuevo)
