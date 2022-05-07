@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo 'Testing..desde hook 5 intentando subir cambios'
+                sh 'mvn -f pom.xml clean test'
             }
         }
         stage('Deploy') {
