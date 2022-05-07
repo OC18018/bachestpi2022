@@ -19,33 +19,20 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
-import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.control.ObjetoBean;
-import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.Objeto;
+import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.control.RutaBean;
+import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.Ruta;
 
 /**
  *
  * @author armandop444
  */
-@Path("objeto")
+@Path("ruta")
 @RequestScoped
-public class ObjetoResource implements Serializable {
+public class RutaResource implements Serializable {
 
     @Inject
-    ObjetoBean toBean;
+    RutaBean toBean;
 
-//    
-//    @GET
-//    @Path("nombre")
-//    public Response findNombre( 
-//            @QueryParam(value = "first") 
-//            @DefaultValue(value = "0")
-//            String nombre){
-//        List<Objeto> lista;
-//        
-//        lista=toBean.findNombre(nombre);
-//        
-//        return Response.ok(lista).build();
-//    }
     @GET
     @Path("contar")
     public CompletableFuture<Long> contar() {
@@ -53,7 +40,7 @@ public class ObjetoResource implements Serializable {
     }
 
     @POST
-    public Response crea(Objeto nuevo) {
+    public Response crea(Ruta nuevo) {
         toBean.crear(nuevo);
         return Response.ok(nuevo)
                 .header("Registro-Creado", nuevo)
@@ -61,7 +48,7 @@ public class ObjetoResource implements Serializable {
     }
 
     @PUT
-    public Response modificar(Objeto edit) {
+    public Response modificar(Ruta edit) {
         toBean.Modificar(edit);
         return Response.ok(edit)
                 .header("Modificado", edit)
@@ -72,8 +59,8 @@ public class ObjetoResource implements Serializable {
     @DELETE
     @Path("{userId}")
     public Response eliminar(@PathParam("userId") Long id) {
-        Objeto eliminar = new Objeto();
-        eliminar.setIdObjeto(id);
+        Ruta eliminar = new Ruta();
+        eliminar.setIdRuta(id);
         toBean.eliminar(eliminar);
         return Response.ok(eliminar)
                 .header("ID-eliminado", id)
@@ -87,7 +74,7 @@ public class ObjetoResource implements Serializable {
             @DefaultValue(value = "0") int firts,
             @QueryParam(value = "pagesize")
             @DefaultValue(value = "50") int pagueSize) {
-        List<Objeto> registros = toBean.findRange(firts, pagueSize);
+        List<Ruta> registros = toBean.findRange(firts, pagueSize);
         Long total = toBean.contar();
         return Response.ok(registros)
                 .header("Total-Registro", total)
@@ -97,4 +84,5 @@ public class ObjetoResource implements Serializable {
                 //                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
                 .build();
     }
+
 }
