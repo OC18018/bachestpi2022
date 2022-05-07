@@ -26,7 +26,7 @@ import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.control.abstractDataAccess;
  */
 @ExtendWith(ArquillianExtension.class)
 @TestMethodOrder(OrderAnnotation.class)
-public class EstadoIT {
+public class EstadoResourcesIT {
 
     @Deployment
     public static WebArchive crearDespliegue() {

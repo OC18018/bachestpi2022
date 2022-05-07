@@ -32,8 +32,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.control.TipoObjetoBean;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.control.abstractDataAccess;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.TipoObjeto;
-import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.JakartaRestConfiguration;
-import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.TipoObjetoResource;
+
 
 /**
  *
