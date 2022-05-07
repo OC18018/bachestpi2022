@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package sv.edu.ues.occ.ingenieria.tpi135.bachestpi.control;
+package sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources;
 
 import java.io.StringReader;
 import java.net.URL;
@@ -29,6 +29,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
+import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.control.TipoObjetoBean;
+import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.control.abstractDataAccess;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.TipoObjeto;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.JakartaRestConfiguration;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources.TipoObjetoResource;
