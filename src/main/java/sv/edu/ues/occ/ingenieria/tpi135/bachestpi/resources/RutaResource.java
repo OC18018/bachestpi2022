@@ -40,7 +40,7 @@ public class RutaResource implements Serializable {
     }
 
     @POST
-    public Response crea(Ruta nuevo) {
+    public Response crear(Ruta nuevo) {
         toBean.crear(nuevo);
         return Response.ok(nuevo)
                 .header("Registro-Creado", nuevo)
