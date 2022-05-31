@@ -4,14 +4,26 @@
  */
 package sv.edu.ues.occ.ingenieria.tpi135.bachestpi.resources;
 
-import java.util.List;
-import javax.inject.Inject;
+import java.io.StringReader;
+import java.net.URL;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import org.jboss.arquillian.container.test.api.RunAsClient;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import static org.junit.jupiter.api.Assertions.*;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.Estado;
@@ -35,6 +47,8 @@ public class EstadoResourcesIT {
                 .addAsResource("persistence-arquillian.xml")
                 .addClass(abstractDataAccess.class)
                 .addClass(EstadoBean.class)
+                .addClass(JakartaRestConfiguration.class)
+                .addClass(EstadoResource.class)
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                 .addAsResource("META-INF/sql/datos.sql", "META-INF/sql/datos.sql")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
@@ -42,122 +56,175 @@ public class EstadoResourcesIT {
         return salida;
     }
 
-    @Inject
-    EstadoBean cut;
+    @ArquillianResource
+    URL url;
 
     @Test
-    @Order(1)
-    public void testContar() {
-        System.out.println("\n\n");
-        System.out.println("\n\n");
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Contar");
-        System.out.println("\n\n");
-        assertNotNull(cut);
-        Long resultado = cut.contar();
-        assertNotNull(resultado);
-        System.out.println("Se encontraron " + resultado + " Resultados");
-        System.out.println("\n\n");
-    }
-
-    @Test
-    @Order(2)
-    public void testCrear() {
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Crear");
-        System.out.println("\n\n");
-        assertNotNull(cut);
-        Estado nuevo = new Estado();
-        nuevo.setNombre("creado IT");
-        cut.crear(nuevo);
-        Estado esperado = cut.findById(5);
-        System.out.println("Creado id 5 obteniendo nombre " + esperado.getNombre());
-        System.out.println("\n\n");
-        Long contar = cut.contar();
-        System.out.println("Total de Datos actuales: " + contar);
-        System.out.println("\n\n");
-    }
-
-    @Test
-    @Order(3)
-    public void testFindByid() {
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("FindId");
-        System.out.println("\n\n");
-        assertNotNull(cut);
-        Estado nuevo = new Estado();
-        Integer id = 4;
-        Estado Result = cut.findById(id);
-        System.out.println("Se encontro el resultado " + Result.getNombre());
-        System.out.println("\n\n");
-    }
-
-    @Test
+    @RunAsClient
     @Order(4)
-    public void testModificar() {
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Modificar");
-        System.out.println("\n\n");
-        assertNotNull(cut);
-        int id = 4;
-        Estado nuevo = new Estado();
-        nuevo.setIdEstado(id);
-        nuevo.setNombre("Modificado en IT");
-        Estado sinModificar = cut.findById(id);
-        System.out.println("Antes de Modificar " + sinModificar.getNombre());
-        System.out.println("\n\n");
-        cut.Modificar(nuevo);
-        Estado modificado = cut.findById(id);
-        System.out.println("Paso Modificar " + modificado.getNombre());
-        System.out.println("\n\n");
-    }
-
-    @Test
-    @Order(5)
     public void testFindAll() {
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("findAll");
+        System.out.println("findAllEstado");
+
+        int resultadoEsperado = 200;
+        Client cliente = ClientBuilder.newClient();
+        WebTarget target = cliente.target(url.toString() + "resources/");
+        Response respuesta = target.path("estado").request("application/json").get();
+        assertEquals(resultadoEsperado, respuesta.getStatus());
+        String totalTexto = respuesta.getHeaderString("Total-Registro");
+        assertNotEquals(Integer.valueOf(0), Integer.valueOf(totalTexto));
+        String cuerpoString = respuesta.readEntity(String.class);
+        JsonReader lector = Json.createReader(new StringReader(cuerpoString));
+        JsonArray listaJson = lector.readArray();
+        int totalRegistros = listaJson.size();
+        assertTrue(totalRegistros > 0);
         System.out.println("\n\n");
-        assertNotNull(cut);
-        List<Estado> resultado = cut.findAll();
-        assertNotNull(resultado);
-        assertTrue(!resultado.isEmpty());
-        System.out.println("La lista posee " + resultado.size());
+        System.out.println("\n\n");
+        for (int i = 0; i < listaJson.size(); i++) {
+            JsonObject objeto = listaJson.getJsonObject(i);
+            System.out.println("ID: " + objeto.getInt("idEstado"));
+        }
+    }
+
+    @Test
+    @RunAsClient
+    @Order(1)
+    public void testCrear() {
+        System.out.println("Crear Estado");
+        Estado nuevo = new Estado();
+        nuevo.setNombre("creado desde prueba");
+
+        int resultadoEsperado = 200;
+        Client cliente = ClientBuilder.newClient();
+        WebTarget target = cliente.target(url.toString() + "resources/");
+        Response respuesta = target.path("estado").request("application/json").post(Entity.entity(nuevo, MediaType.APPLICATION_JSON));
+        assertEquals(resultadoEsperado, respuesta.getStatus());
+        String registro = respuesta.getHeaderString("Registro-Creado");
+        assertNotEquals(null, registro);
+        String cuerpoString = respuesta.readEntity(String.class);
+        JsonReader lector = Json.createReader(new StringReader(cuerpoString));
+        JsonObject objeto = lector.readObject();
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        System.out.println("Creado " + objeto);
+        System.out.println("\n\n");
         System.out.println("\n\n");
     }
 
     @Test
-    @Order(6)
-    public void testFindRange() {
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("FindRange");
+    @RunAsClient
+    @Order(2)
+    public void testModificar() {
+        System.out.println("Modificar estado");
+        Estado nuevo = new Estado();
+        nuevo.setIdEstado(3);
+        nuevo.setNombre("modificado desde prueba");
+
+        int resultadoEsperado = 200;
+        Client cliente = ClientBuilder.newClient();
+        WebTarget target = cliente.target(url.toString() + "resources/");
+        Response respuesta = target.path("estado").request("application/json").put(Entity.entity(nuevo, MediaType.APPLICATION_JSON));
+        assertEquals(resultadoEsperado, respuesta.getStatus());
+        String registro = respuesta.getHeaderString("Modificado");
+        assertNotEquals(null, registro);
+        String cuerpoString = respuesta.readEntity(String.class);
+        JsonReader lector = Json.createReader(new StringReader(cuerpoString));
+        JsonObject objeto = lector.readObject();
         System.out.println("\n\n");
-        assertNotNull(cut);
-        int first = 1;
-        int pageSize = 3;
-        List<Estado> resultado = cut.findRange(first, pageSize);
-        assertNotNull(resultado);
-        assertTrue(!resultado.isEmpty());
-        System.out.println("Se encontraron " + resultado.size());
+        System.out.println("\n\n");
+        System.out.println("Modificado " + objeto);
+        System.out.println("\n\n");
         System.out.println("\n\n");
 
     }
 
     @Test
-    @Order(7)
+    @RunAsClient
+    @Order(3)
     public void testEliminar() {
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Eliminar");
-        assertNotNull(cut);
-        Estado eliminado = new Estado();
-        eliminado.setIdEstado(2);
-        System.out.println("\n\n");
-        System.out.println("Registros actuales:" + cut.contar());
-        System.out.println("\n\n");
-        cut.eliminar(eliminado);        
-        System.out.println("Eliminado con exito registro actuales:" + cut.contar());
-        System.out.println("\n\n");
+        System.out.println("Eliminar estado");
+        Estado nuevo = new Estado();
 
+        int resultadoEsperado = 200;
+        Client cliente = ClientBuilder.newClient();
+        WebTarget target = cliente.target(url.toString() + "resources/");
+        Response respuesta = target.path("estado/2").request("application/json").delete();
+        assertEquals(resultadoEsperado, respuesta.getStatus());
+        String registro = respuesta.getHeaderString("ID-eliminado");
+        assertNotEquals(null, registro);
+        String cuerpoString = respuesta.readEntity(String.class);
+        JsonReader lector = Json.createReader(new StringReader(cuerpoString));
+        JsonObject objeto = lector.readObject();
+
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        System.out.println("ID:" + objeto.getInt("idEstado") + " eliminado con exito");
+        System.out.println("\n\n");
+        System.out.println("\n\n");
     }
 
+    @Test
+    @RunAsClient
+    @Order(5)
+    public void testFindNombre() {
+        System.out.println("findNombre");
+        
+        int resultadoEsperado = 200;
+        Client cliente = ClientBuilder.newClient();
+        WebTarget target = cliente.target(url.toString() + "resources/");
+        //Response respuesta = target.path("estado?findNombre=prueba4").request("application/json").get();
+        Response respuesta = target.path("estado/find").queryParam("nombre", "prueba4").request().get();
+        assertEquals(resultadoEsperado, respuesta.getStatus());
+        String totalTexto = respuesta.getHeaderString("Total-Registro");
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        System.out.println("Total Texto " + totalTexto);
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        assertNotEquals(Integer.valueOf(0), Integer.valueOf(totalTexto));
+        String cuerpoString = respuesta.readEntity(String.class);
+        JsonReader lector = Json.createReader(new StringReader(cuerpoString));
+        JsonArray listaJson = lector.readArray();
+        int totalRegistros = listaJson.size();
+        assertTrue(totalRegistros > 0);
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        for (int i = 0; i < listaJson.size(); i++) {
+            JsonObject objeto = listaJson.getJsonObject(i);
+            System.out.println("aqui estoy loco ID: " + objeto);
+                    System.out.println("\n\n");
+        }
+    }
+    
+    @Test
+    @RunAsClient
+    @Order(6)
+    public void testFindId() {
+        System.out.println("findId Estado");
+        
+        int resultadoEsperado = 200;
+        Client cliente = ClientBuilder.newClient();
+        WebTarget target = cliente.target(url.toString() + "resources/");
+        //Response respuesta = target.path("estado?findNombre=prueba4").request("application/json").get();
+        Response respuesta = target.path("estado/findId").queryParam("id", "1").request().get();
+        assertEquals(resultadoEsperado, respuesta.getStatus());
+        String totalTexto = respuesta.getHeaderString("Total-Registro");
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        System.out.println("Total Texto " + totalTexto);
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        assertNotEquals(Integer.valueOf(0), Integer.valueOf(totalTexto));
+        String cuerpoString = respuesta.readEntity(String.class);
+        JsonReader lector = Json.createReader(new StringReader(cuerpoString));
+        JsonArray listaJson = lector.readArray();
+        int totalRegistros = listaJson.size();
+        assertTrue(totalRegistros > 0);
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        for (int i = 0; i < listaJson.size(); i++) {
+            JsonObject objeto = listaJson.getJsonObject(i);
+            System.out.println("aqui esta el ID: " + objeto);
+            System.out.println("\n\n");
+        }
+    }
 }
