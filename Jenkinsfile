@@ -13,7 +13,7 @@ pipeline {
                 -Dsonar.projectKey=bachesBackend \
                 -Dsonar.host.url=http://localhost:9000 \
                 -Dsonar.login=admin \
-                -Dsonar.password=123456 \'
+                -Dsonar.password=123456'
                 
             }
         }
