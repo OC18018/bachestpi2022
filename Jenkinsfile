@@ -2,6 +2,7 @@ pipeline {
     agent { 
         dockerfile{
             dir 'Build'
+            additionalBuildArgs '--add-host db:192.168.1.47'
         } 
     }
     stages {
@@ -25,7 +26,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                withMaven {
+                withMaven(maven: 'maven') {
                 sh 'mvn -f pom.xml clean test'
                 }
             }
