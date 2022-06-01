@@ -1,10 +1,5 @@
 pipeline {
-    agent any{ 
-        dockerfile{
-            dir 'Build'
-            additionalBuildArgs '--add-host db:192.168.1.47'
-        } 
-    }
+    agent any
     stages {
         stage('Build') {
             steps {
