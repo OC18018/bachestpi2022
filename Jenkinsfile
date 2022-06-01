@@ -1,15 +1,10 @@
 pipeline {
-    agent { 
-    filename 'Dockerfile'
-    dir 'Build'
-    
-    
-    }
+    agent any
 
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
+                echo 'pwd'
             }
         }
         stage('sonnar'){
