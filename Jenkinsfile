@@ -5,6 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'pwd'
+                sh 'ls'
             }
         }
         stage('sonnar'){
