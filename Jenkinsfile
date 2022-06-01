@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'pwd'
+                sh 'pwd'
             }
         }
         stage('sonnar'){
