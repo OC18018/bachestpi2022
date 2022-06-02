@@ -46,11 +46,11 @@ public class ObjetoResource implements Serializable {
 //        
 //        return Response.ok(lista).build();
 //    }
-    @GET
-    @Path("contar")
-    public CompletableFuture<Long> contar() {
-        return CompletableFuture.supplyAsync(toBean::contar);
-    }
+//    @GET
+//    @Path("contar")
+//    public CompletableFuture<Long> contar() {
+//        return CompletableFuture.supplyAsync(toBean::contar);
+//    }
 
     @POST
     public Response crear(Objeto nuevo) {
@@ -96,5 +96,25 @@ public class ObjetoResource implements Serializable {
                 //                .header("Access-Control-Allow-Headers", "origins,content-type,accept,authorization")
                 //                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
                 .build();
+    }
+
+    @GET
+    @Path("find")
+    public Response findNombre(@QueryParam(value = "nombre") String nombre) {
+        List<Objeto> lista;
+
+        lista = toBean.findNombre(nombre);
+        Long total = toBean.contar();
+        return Response.ok(lista).header("Total-Registro", total).build();
+    }
+
+    @GET
+    @Path("findId")
+    public Response findId(@QueryParam(value = "id") Integer idObjeto) {
+        List<Objeto> lista;
+
+        lista = toBean.findByIdObjeto(idObjeto);
+        Long total = toBean.contar();
+        return Response.ok(lista).header("Total-Registro", total).build();
     }
 }

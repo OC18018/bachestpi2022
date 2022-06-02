@@ -56,6 +56,16 @@ public class ObjetoBean extends abstractDataAccess<Objeto> implements Serializab
         return 0;
     }
     
+    public List<Objeto> findByIdObjeto(final Integer idObjeto) {
+        if (this.em != null && idObjeto != null) {
+            Query q = em.createNamedQuery("Objeto.findByIdObjeto");
+            q.setParameter("idObjeto", idObjeto);
+            return q.getResultList();
+
+        }
+        return Collections.EMPTY_LIST;
+    }
+    
     public List<Objeto> findNombre(String nombre){
         
         Query q=em.createNamedQuery("Objeto.findByNombre");
