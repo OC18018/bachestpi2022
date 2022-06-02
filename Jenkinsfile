@@ -36,7 +36,7 @@ pipeline {
       steps{
         script {
                 
-            dockerImage = docker.build("--build-arg POSTGRES_USER=postgres registry ${registry}")
+            dockerImage = registry docker.build("--build-arg POSTGRES_USER=postgres")
         }
       }
     }
