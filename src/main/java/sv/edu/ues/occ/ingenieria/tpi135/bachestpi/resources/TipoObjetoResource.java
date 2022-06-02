@@ -32,17 +32,15 @@ public class TipoObjetoResource {
     @Inject
     TipoObjetoBean toBean;
 
-    
-    public Response findAll() {
-        List<TipoObjeto> registros = toBean.findAll();
-        Long total = toBean.contar();
-
-        return Response.ok(registros)
-                .header("Total-Registros", total)
-                .build();
-
-    }
-
+//    public Response findAll() {
+//        List<TipoObjeto> registros = toBean.findAll();
+//        Long total = toBean.contar();
+//
+//        return Response.ok(registros)
+//                .header("Total-Registros", total)
+//                .build();
+//
+//    }
     @POST
     public Response crear(TipoObjeto nuevo) {
         toBean.crear(nuevo);
@@ -70,26 +68,34 @@ public class TipoObjetoResource {
                 .header("ID-eliminado", id)
                 .build();
     }
-    
+
     @GET
     @Produces({"application/json; charset=UTF-8"})
     public Response findRange(
-            @QueryParam(value = "first") 
-            @DefaultValue(value = "0")
-            int first,
-            @QueryParam(value = "pagesize") 
-            @DefaultValue(value="50")
-            int pageSize) {
+            @QueryParam(value = "first")
+            @DefaultValue(value = "0") int first,
+            @QueryParam(value = "pagesize")
+            @DefaultValue(value = "50") int pageSize) {
         List<TipoObjeto> registros = toBean.findRange(first, pageSize);
         Long total = toBean.contar();
         return Response.ok(registros)
                 .header("Total-Registros", total)
                 .build();
     }
-    
+
     @GET
     @Path("contar")
-    public CompletableFuture<Long> contar(){
+    public CompletableFuture<Long> contar() {
         return CompletableFuture.supplyAsync(toBean::contar);
+    }
+
+    @GET
+    @Path("findId")
+    public Response findId(@QueryParam(value = "id") Integer idTipoObjeto) {
+        List<TipoObjeto> lista;
+
+        lista = toBean.findByIdTipoObjeto(idTipoObjeto);
+        Long total = toBean.contar();
+        return Response.ok(lista).header("Total-Registro", total).build();
     }
 }

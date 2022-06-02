@@ -33,7 +33,6 @@ import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.control.TipoObjetoBean;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.control.abstractDataAccess;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.TipoObjeto;
 
-
 /**
  *
  * @author armandop444
@@ -61,37 +60,36 @@ public class TipoObjetoResourceIT {
     @ArquillianResource
     URL url;
 
-    @Test
-    @RunAsClient
-    @Order(4)
-    public void testFindAll() {
-        System.out.println("\n\n");
-        System.out.println("\n\n");
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("findAllTipoObjeto");
-        
-        int resultadoEsperado = 200;
-        Client cliente = ClientBuilder.newClient();
-        WebTarget target = cliente.target(url.toString() + "resources/");
-        Response respuesta = target.path("tipoobjeto").request("application/json").get();
-        assertEquals(resultadoEsperado, respuesta.getStatus());
-        String totalTexto = respuesta.getHeaderString("Total-Registros");
-        assertNotEquals(Integer.valueOf(0), Integer.valueOf(totalTexto));
-        String cuerpoString = respuesta.readEntity(String.class);
-        JsonReader lector = Json.createReader(new StringReader(cuerpoString));
-        JsonArray listaJson = lector.readArray();
-        int totalRegistros = listaJson.size();
-        assertTrue(totalRegistros > 0);
-        System.out.println("\n\n");
-        System.out.println("\n\n");
-        for (int i = 0; i < listaJson.size(); i++) {
-            JsonObject objeto = listaJson.getJsonObject(i);
-            System.out.println("ID: " + objeto.getInt("idTipoObjeto") + " Activo:" + objeto.getBoolean("activo"));
-        }
-        System.out.println("\n\n");
-        System.out.println("\n\n");
-    }
-
+//    @Test
+//    @RunAsClient
+//    @Order(4)
+//    public void testFindAll() {
+//        System.out.println("\n\n");
+//        System.out.println("\n\n");
+//        System.out.println("--------------------------------------------------------------");
+//        System.out.println("findAllTipoObjeto");
+//        
+//        int resultadoEsperado = 200;
+//        Client cliente = ClientBuilder.newClient();
+//        WebTarget target = cliente.target(url.toString() + "resources/");
+//        Response respuesta = target.path("tipoobjeto").request("application/json").get();
+//        assertEquals(resultadoEsperado, respuesta.getStatus());
+//        String totalTexto = respuesta.getHeaderString("Total-Registros");
+//        assertNotEquals(Integer.valueOf(0), Integer.valueOf(totalTexto));
+//        String cuerpoString = respuesta.readEntity(String.class);
+//        JsonReader lector = Json.createReader(new StringReader(cuerpoString));
+//        JsonArray listaJson = lector.readArray();
+//        int totalRegistros = listaJson.size();
+//        assertTrue(totalRegistros > 0);
+//        System.out.println("\n\n");
+//        System.out.println("\n\n");
+//        for (int i = 0; i < listaJson.size(); i++) {
+//            JsonObject objeto = listaJson.getJsonObject(i);
+//            System.out.println("ID: " + objeto.getInt("idTipoObjeto") + " Activo:" + objeto.getBoolean("activo"));
+//        }
+//        System.out.println("\n\n");
+//        System.out.println("\n\n");
+//    }
     @Test
     @RunAsClient
     @Order(1)
@@ -149,11 +147,11 @@ public class TipoObjetoResourceIT {
         System.out.println("\n\n");
 
     }
-    
+
     @Test
     @RunAsClient
     @Order(3)
-    public void testEliminar(){
+    public void testEliminar() {
         System.out.println("\n\n");
         System.out.println("\n\n");
         System.out.println("--------------------------------------------------------------");
@@ -170,11 +168,43 @@ public class TipoObjetoResourceIT {
         String cuerpoString = respuesta.readEntity(String.class);
         JsonReader lector = Json.createReader(new StringReader(cuerpoString));
         JsonObject objeto = lector.readObject();
-        
+
         System.out.println("\n\n");
         System.out.println("\n\n");
-        System.out.println("ID:" + objeto.getInt("idTipoObjeto")+" eliminado con exito");
+        System.out.println("ID:" + objeto.getInt("idTipoObjeto") + " eliminado con exito");
         System.out.println("\n\n");
         System.out.println("\n\n");
+    }
+
+    @Test
+    @RunAsClient
+    @Order(6)
+    public void testFindId() {
+        System.out.println("findId TipoObjeto");
+
+        int resultadoEsperado = 200;
+        Client cliente = ClientBuilder.newClient();
+        WebTarget target = cliente.target(url.toString() + "resources/");
+        Response respuesta = target.path("tipoobjeto/findId").queryParam("id", "1").request().get();
+        assertEquals(resultadoEsperado, respuesta.getStatus());
+        String totalTexto = respuesta.getHeaderString("Total-Registro");
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        System.out.println("Total Texto " + totalTexto);
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        assertNotEquals(Integer.valueOf(0), Integer.valueOf(totalTexto));
+        String cuerpoString = respuesta.readEntity(String.class);
+        JsonReader lector = Json.createReader(new StringReader(cuerpoString));
+        JsonArray listaJson = lector.readArray();
+        int totalRegistros = listaJson.size();
+        assertTrue(totalRegistros > 0);
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        for (int i = 0; i < listaJson.size(); i++) {
+            JsonObject objeto = listaJson.getJsonObject(i);
+            System.out.println("aqui esta el ID: " + objeto);
+            System.out.println("\n\n");
+        }
     }
 }
