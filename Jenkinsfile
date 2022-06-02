@@ -39,7 +39,7 @@ pipeline {
                 sh 'mvn package'
             }
             sh 'ls'
-            sh 'cp target/bachestpi-1.0-SNAPSHOT.war Baches.war'
+            sh 'cp target/bachestpi-1.0-SNAPSHOT.war Hola.war'
             sh 'ls'
             dockerImage= docker.build("${registry}","--build-arg POSTGRES_USER=${POSTGRES_USER} --build-arg POSTGRES_PASS=${POSTGRES_PASS} --build-arg POSTGRES_DB=${POSTGRES_DB} .")
         }
