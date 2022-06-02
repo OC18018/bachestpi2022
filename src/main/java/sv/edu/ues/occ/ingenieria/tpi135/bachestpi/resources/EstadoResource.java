@@ -26,7 +26,7 @@ import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.Estado;
  *
  * @author armandop444
  */
-@Path("estado")
+@Path("prueba")
 @RequestScoped
 public class EstadoResource implements Serializable {
 
@@ -79,6 +79,7 @@ public class EstadoResource implements Serializable {
     }
 
     @GET
+    @Path("hola")
     @Produces({"application/json; charset=UTF-8"})
     public Response findRange(
             @QueryParam(value = "first")
