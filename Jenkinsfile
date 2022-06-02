@@ -35,9 +35,10 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-            //dockerImage= docker.build registry
+            
             sh 'sudo chmod 666 /var/run/docker.sock'
-            sh "docker build --build-arg POSTGRES_USER=postgres -t ${registry}:latest ./"
+            dockerImage= docker.build("--build-arg POSTGRES_USER=postgres") registry
+            //sh "docker build --build-arg POSTGRES_USER=postgres -t ${registry}:latest ./"
         }
       }
     }
@@ -71,7 +72,7 @@ pipeline {
      steps{
          script {
              //sh "docker run -p 9090:8080 --add-host db:192.168.1.33 --rm --name bachesContainer ${registry}:latest"
-             docker.run("-p 9090:8080 --add-host db:192.168.1.33 --rm --name bachesContainer ${registry}:latest")
+             registry.run("-p 9090:8080 --add-host db:192.168.1.33 --rm --name bachesContainer")
          }
       }
     }
