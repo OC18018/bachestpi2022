@@ -18,7 +18,7 @@ pipeline {
             sh 'mvn clean verify sonar:sonar \
                 -Dsonar.projectKey=bachesBackend \
                 -Dsonar.host.url=http://localhost:9000 \
-                -Dsonar.login=31956f9f70fe25016e4c2009fb65a30d2b6a2a29'
+                -Dsonar.login=1daea747f6ac16dce33e160dd73639c0ae3f1c7e'
                 }
 
             }
