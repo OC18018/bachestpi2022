@@ -44,11 +44,11 @@ public class EstadoResource implements Serializable {
 //
 //    }
 
-    @GET
-    @Path("contar")
-    public CompletableFuture<Long> contar() {
-        return CompletableFuture.supplyAsync(toBean::contar);
-    }
+//    @GET
+//    @Path("contar")
+//    public CompletableFuture<Long> contar() {
+//        return CompletableFuture.supplyAsync(toBean::contar);
+//    }
 
     @POST
     public Response crear(Estado nuevo) {
