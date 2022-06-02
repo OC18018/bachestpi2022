@@ -85,4 +85,24 @@ public class RutaResource implements Serializable {
                 .build();
     }
 
+    @GET
+    @Path("find")
+    public Response findNombre(@QueryParam(value = "nombre") String nombre) {
+        List<Ruta> lista;
+
+        lista = toBean.findNombre(nombre);
+        Long total = toBean.contar();
+        return Response.ok(lista).header("Total-Registro", total).build();
+    }
+
+    @GET
+    @Path("findId")
+    public Response findId(@QueryParam(value = "id") Long idRuta) {
+        List<Ruta> lista;
+
+        lista = toBean.findByIdRuta(idRuta);
+        Long total = toBean.contar();
+        return Response.ok(lista).header("Total-Registro", total).build();
+    }
+
 }

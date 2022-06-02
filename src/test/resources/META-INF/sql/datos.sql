@@ -14,3 +14,7 @@ INSERT INTO objeto (nombre, observaciones) VALUES ('agregado en IT','es de .sql'
 INSERT INTO objeto (nombre, observaciones) VALUES ('agregado en IT','es de .sql');
 INSERT INTO objeto (nombre, observaciones) VALUES ('agregado en IT 2','es de .sql');
 INSERT INTO objeto (nombre, observaciones) VALUES ('agregado','es de .sql');
+INSERT INTO ruta (nombre,fecha_creacion) VALUES ('prueba','2022-05-29');
+INSERT INTO ruta (nombre,fecha_creacion) VALUES ('prueba2','2022-05-29');
+INSERT INTO ruta (nombre,fecha_creacion) VALUES ('prueba3','2022-05-30');
+INSERT INTO ruta (nombre,fecha_creacion) VALUES ('prueba4','2022-05-30');
