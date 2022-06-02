@@ -73,7 +73,7 @@ pipeline {
          script {
              //sh "docker run -p 9090:8080 --add-host db:192.168.1.33 --rm --name bachesContainer ${registry}:latest"
              //registry.run("-p 9090:8080 --add-host db:192.168.1.33 --rm --name bachesContainer")
-             docker.image("${registry}:latest").withRun("-p 9090:8080 --add-host db:192.168.1.33 --rm --name bachesContainer")
+             docker.image("${registry}:latest").withRun("-p 9090:8080" + "--add-host db:192.168.1.33 --rm --name bachesContainer")
          }
       }
     }
