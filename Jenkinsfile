@@ -11,18 +11,18 @@ pipeline {
     
     stages {
 
-            stage('sonnar'){
-            steps('gates'){
-                withMaven {
-            sh'mvn --version'
-            sh 'mvn clean verify sonar:sonar \
-                -Dsonar.projectKey=bachesBackend \
-                -Dsonar.host.url=http://localhost:9000 \
-                -Dsonar.login=31956f9f70fe25016e4c2009fb65a30d2b6a2a29'
-                }
+            //stage('sonnar'){
+            //steps('gates'){
+            //    withMaven {
+           // sh'mvn --version'
+            //sh 'mvn clean verify sonar:sonar \
+              //  -Dsonar.projectKey=bachesBackend \
+               // -Dsonar.host.url=http://localhost:9000 \
+                //-Dsonar.login=31956f9f70fe25016e4c2009fb65a30d2b6a2a29'
+                //}
                 
-            }
-        }
+            //}
+        //}
         stage('Test') {
             steps {
                 withMaven(maven: 'maven') {
@@ -66,7 +66,7 @@ pipeline {
     stage('Docker Run') {
      steps{
          script {
-            dockerImage.run("-p 9090:8080 --add-host db:192.168.1.47 --rm --name bachesContainer")
+            dockerImage.run("-p 9090:8080 --add-host db:192.168.1.33 --rm --name bachesContainer")
          }
       }
     }
