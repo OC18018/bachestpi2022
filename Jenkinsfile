@@ -70,7 +70,8 @@ pipeline {
     stage('Docker Run') {
      steps{
          script {
-             sh "docker run -p 9090:8080 --add-host db:192.168.1.33 --rm --name bachesContainer ${registry}:latest"
+             //sh "docker run -p 9090:8080 --add-host db:192.168.1.33 --rm --name bachesContainer ${registry}:latest"
+             docker.run("-p 9090:8080 --add-host db:192.168.1.33 --rm --name bachesContainer ${registry}:latest")
          }
       }
     }
