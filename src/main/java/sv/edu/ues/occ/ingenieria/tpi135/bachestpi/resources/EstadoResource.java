@@ -90,7 +90,7 @@ public class EstadoResource implements Serializable {
                 .header("Total-Registro", total)
                 .build();
     }
-    
+    //
     @GET
     @Path("find")
     public Response findNombre(@QueryParam(value = "nombre") String nombre){
