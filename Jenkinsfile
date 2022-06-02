@@ -35,11 +35,8 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-            sh "'docker build -t baches:latest .'"
-            docker.withCredentials([usernamePassword(credentialsId: 'dockerhub_id', passwordVariable: 'Zazque00.', usernameVariable: 'josdevwho')]) {
-          sh "docker login -u josdevwho -p Zazque00."
-          sh 'docker push baches:latest'
-        }
+            //dockerImage= docker.build registry
+            sh 'ls'
         }
       }
     }
