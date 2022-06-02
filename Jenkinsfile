@@ -36,7 +36,7 @@ pipeline {
       steps{
         script {
             
-            sh 'sudo chmod 666 /var/run/docker.sock'
+            //sh 'sudo chmod 666 /var/run/docker.sock'
             dockerImage= docker.build("${ registry}","--build-arg POSTGRES_USER=postgres .")
             //sh "docker build --build-arg POSTGRES_USER=postgres -t ${registry}:latest ./"
         }
@@ -47,13 +47,13 @@ pipeline {
     stage('Upload Image') {
      steps{    
          script {
-            //docker.withRegistry( '', registryCredential ) {
-            //dockerImage.push()
-            //}
-            withCredentials([usernamePassword(credentialsId: registryCredential, passwordVariable: 'Zazque00.', usernameVariable: 'josdevwho')]) {
-                sh "docker login -u josdevwho -p Zazque00."
-                sh "docker push ${registry}:latest"
+            docker.withRegistry( '', registryCredential ) {
+                dockerImage.push()
             }
+            //withCredentials([usernamePassword(credentialsId: registryCredential, passwordVariable: 'Zazque00.', usernameVariable: 'josdevwho')]) {
+            //    sh "docker login -u josdevwho -p Zazque00."
+            //    sh "docker push ${registry}:latest"
+            //}
         }
       }
     }
