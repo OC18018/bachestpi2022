@@ -38,9 +38,9 @@ pipeline {
             withMaven(maven: 'maven') {
                 sh 'mvn package'
             }
-            sh 'ls'
-            sh 'cp target/bachestpi-1.0-SNAPSHOT.war Hola.war'
-            sh 'ls'
+            sh 'ls -l'
+            sh 'cp target/bachestpi-1.0-SNAPSHOT.war ~/Build/Baches.war'
+            sh 'ls -l'
             dockerImage= docker.build("${registry}","--build-arg POSTGRES_USER=${POSTGRES_USER} --build-arg POSTGRES_PASS=${POSTGRES_PASS} --build-arg POSTGRES_DB=${POSTGRES_DB} .")
         }
       }
