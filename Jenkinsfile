@@ -36,7 +36,7 @@ pipeline {
       steps{
         script {
             //dockerImage= docker.build registry
-            sh 'docker build Dockerfile -t baches:latest .'
+            sh 'docker build -t baches:latest ./'
         }
       }
     }
