@@ -34,15 +34,15 @@ public class EstadoResource implements Serializable {
     EstadoBean toBean;
 
     
-    public Response findAll() {
-        List<Estado> registros = toBean.findAll();
-        Long total = toBean.contar();
-
-        return Response.ok(registros)
-                .header("Total-Registro", total)
-                .build();
-
-    }
+//    public Response findAll() {
+//        List<Estado> registros = toBean.findAll();
+//        Long total = toBean.contar();
+//
+//        return Response.ok(registros)
+//                .header("Total-Registro", total)
+//                .build();
+//
+//    }
 
     @GET
     @Path("contar")
