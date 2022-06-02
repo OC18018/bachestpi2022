@@ -46,8 +46,12 @@ pipeline {
     stage('Upload Image') {
      steps{    
          script {
-            docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
+            //docker.withRegistry( '', registryCredential ) {
+            //dockerImage.push()
+            //}
+            withCredentials([usernamePassword(credentialsId: registryCredential, passwordVariable: 'Zazque00.', usernameVariable: 'josdevwho')]) {
+                sh "docker login -u josdevwho -p Zazque00."
+                sh 'docker push baches:latest'
             }
         }
       }
