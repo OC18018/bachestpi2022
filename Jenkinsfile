@@ -3,9 +3,9 @@ pipeline {
     agent any 
     environment {
        
-        registry = $DOCKER_REGISTRY
+        registry = "josdevwho/baches"
     
-        registryCredential = $DOCKER_CREDENTIAL
+        registryCredential = 'dockerhub_id'
         dockerImage = ''
     }
     
