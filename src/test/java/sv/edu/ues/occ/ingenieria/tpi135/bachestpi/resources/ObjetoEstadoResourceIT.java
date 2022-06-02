@@ -170,4 +170,37 @@ public class ObjetoEstadoResourceIT {
         System.out.println("\n\n");
     }
 
+    @Test
+    @RunAsClient
+    @Order(4)
+    public void testFindId() {
+        System.out.println("findId Estado");
+
+        int resultadoEsperado = 200;
+        Client cliente = ClientBuilder.newClient();
+        WebTarget target = cliente.target(url.toString() + "resources/");
+        //Response respuesta = target.path("estado?findNombre=prueba4").request("application/json").get();
+        Response respuesta = target.path("objetoestado/findId").queryParam("id", "2").request().get();
+        assertEquals(resultadoEsperado, respuesta.getStatus());
+        String totalTexto = respuesta.getHeaderString("Total-Registro");
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        System.out.println("Total Texto " + totalTexto);
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        assertNotEquals(Integer.valueOf(0), Integer.valueOf(totalTexto));
+        String cuerpoString = respuesta.readEntity(String.class);
+        JsonReader lector = Json.createReader(new StringReader(cuerpoString));
+        JsonArray listaJson = lector.readArray();
+        int totalRegistros = listaJson.size();
+        assertTrue(totalRegistros > 0);
+        System.out.println("\n\n");
+        System.out.println("\n\n");
+        for (int i = 0; i < listaJson.size(); i++) {
+            JsonObject objeto = listaJson.getJsonObject(i);
+            System.out.println("aqui esta el ID: " + objeto);
+            System.out.println("\n\n");
+        }
+    }
+
 }

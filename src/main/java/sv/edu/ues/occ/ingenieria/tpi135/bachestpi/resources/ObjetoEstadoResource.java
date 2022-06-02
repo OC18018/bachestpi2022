@@ -95,4 +95,14 @@ public class ObjetoEstadoResource implements Serializable {
                 .build();
     }
 
+    @GET
+    @Path("findId")
+    public Response findId(@QueryParam(value = "id") Long idObjetoEstado) {
+        List<ObjetoEstado> lista;
+
+        lista = toBean.findByIdObjetoEstado(idObjetoEstado);
+        Long total = toBean.contar();
+        return Response.ok(lista).header("Total-Registro", total).build();
+    }
+
 }

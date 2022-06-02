@@ -5,12 +5,14 @@
  */
 package sv.edu.ues.occ.ingenieria.tpi135.bachestpi.control;
 
-
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity.ObjetoEstado;
 
 /**
@@ -31,6 +33,16 @@ public class ObjetoEstadoBean extends abstractDataAccess<ObjetoEstado> implement
     @Override
     public EntityManager getEntityManager() {
         return em;
+    }
+
+    public List<ObjetoEstado> findByIdObjetoEstado(final Long idObjetoEstado) {
+        if (this.em != null && idObjetoEstado != null) {
+            Query q = em.createNamedQuery("ObjetoEstado.findByIdObjetoEstado");
+            q.setParameter("idObjetoEstado", idObjetoEstado);
+            return q.getResultList();
+
+        }
+        return Collections.EMPTY_LIST;
     }
 
 }
