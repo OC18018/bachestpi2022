@@ -37,7 +37,7 @@ pipeline {
         script {
             //dockerImage= docker.build registry
             sh 'sudo chmod 666 /var/run/docker.sock'
-            sh 'docker build -t baches:latest ./'
+            sh "docker build -t ${registry}:latest ./"
         }
       }
     }
