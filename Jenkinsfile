@@ -51,7 +51,7 @@ pipeline {
             //}
             withCredentials([usernamePassword(credentialsId: registryCredential, passwordVariable: 'Zazque00.', usernameVariable: 'josdevwho')]) {
                 sh "docker login -u josdevwho -p Zazque00."
-                sh 'docker push baches:latest'
+                sh "docker push ${registry}:latest"
             }
         }
       }
