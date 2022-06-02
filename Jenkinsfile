@@ -70,7 +70,7 @@ pipeline {
     stage('Docker Run') {
      steps{
          script {
-            sh "-p 9090:8080 --add-host db:192.168.1.33 --rm --name bachesContainer")
+            sh "-p 9090:8080 --add-host db:192.168.1.33 --rm --name bachesContainer"
          }
       }
     }
