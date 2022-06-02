@@ -33,7 +33,6 @@ public class EstadoResource implements Serializable {
     @Inject
     EstadoBean toBean;
 
-    
 //    public Response findAll() {
 //        List<Estado> registros = toBean.findAll();
 //        Long total = toBean.contar();
