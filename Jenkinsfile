@@ -38,7 +38,7 @@ pipeline {
             withMaven(maven: 'maven') {
                 sh 'mvn package'
                 sh 'ls -l'
-                sh 'cp target/bachestpi-1.0-SNAPSHOT ./Baches.war'
+                sh 'cp target/bachestpi-1.0-SNAPSHOT.war ./Baches.war'
                 sh 'ls -l'
             }
 
