@@ -97,6 +97,7 @@ public class EstadoResource implements Serializable {
         List<Estado> lista;
         
         lista=toBean.findNombre(nombre);
+        lista.stream().forEach(u -> u.setNombre(u.getNombre().toUpperCase()));
         Long total = toBean.contar();
         return Response.ok(lista).header("Total-Registro", total).build();
     }
