@@ -37,7 +37,7 @@ pipeline {
         script {
             
             sh 'sudo chmod 666 /var/run/docker.sock'
-            dockerImage= docker.build("  ${registry} --build-arg POSTGRES_USER=postgres")
+            dockerImage= docker.build registry
             //sh "docker build --build-arg POSTGRES_USER=postgres -t ${registry}:latest ./"
         }
       }
