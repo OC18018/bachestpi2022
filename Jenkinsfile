@@ -36,7 +36,7 @@ pipeline {
       steps{
         script {
             sh "'docker build -t baches:latest .'"
-            withCredentials([usernamePassword(credentialsId: 'dockerhub_id', passwordVariable: 'Zazque00.', usernameVariable: 'josdevwho')]) {
+            docker.withCredentials([usernamePassword(credentialsId: 'dockerhub_id', passwordVariable: 'Zazque00.', usernameVariable: 'josdevwho')]) {
           sh "docker login -u josdevwho -p Zazque00."
           sh 'docker push baches:latest'
         }
