@@ -30,7 +30,7 @@ pipeline {
                 }
             }
         }
-    
+    //
     // Building Docker images
     stage('Building image') {
       steps{
