@@ -89,10 +89,6 @@ public class EstadoResource implements Serializable {
         Long total = toBean.contar();
         return Response.ok(registros)
                 .header("Total-Registro", total)
-                //                .header("Access-Control-Allow-Origin", "*")
-                //                .header("Access-Control-Allow-Credentials", "true")
-                //                .header("Access-Control-Allow-Headers", "origins,content-type,accept,authorization")
-                //                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
                 .build();
     }
     
