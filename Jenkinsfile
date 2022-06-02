@@ -37,9 +37,8 @@ pipeline {
         script {
             withMaven(maven: 'maven') {
                 sh 'mvn package'
-                sh 'cd target/'
-                sh 'ls'
-                //sh 'cp target/bachestpi-1.0-SNAPSHOT.war /Baches.war'
+                sh 'ls -l'
+                sh 'cp /var/lib/jenkins/workspace/BachesPipeline/target/bachestpi-1.0-SNAPSHOT ./Baches.war'
                 sh 'ls -l'
             }
 
