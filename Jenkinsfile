@@ -64,7 +64,7 @@ pipeline {
     stage('Docker Run') {
      steps{
          script {
-            dockerImage.run("-p 9090:8080 --add-host db:192.168.1.47 --rm --name bachesContainer")
+            dockerImage.run("-p 9090:8080 --add-host db:192.168.1.47 -e POSTGRES_USER=postgres POSTGRES_PASS=123456 POSTGRES_DB_NAME=baches --rm --name bachesContainer")
          }
       }
     }
