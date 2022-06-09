@@ -95,7 +95,7 @@ public class EstadoResource implements Serializable {
     @Path("find")
     public Response findNombre(@QueryParam(value = "nombre") String nombre){
         List<Estado> lista;
-        
+        //
         lista=toBean.findNombre(nombre);
         lista.stream().forEach(u -> u.setNombre(u.getNombre().toUpperCase()));
         Long total = toBean.contar();
