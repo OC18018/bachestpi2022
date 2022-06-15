@@ -47,8 +47,8 @@ public class TipoObjetoBean extends abstractDataAccess<TipoObjeto> implements Se
 
     public List<TipoObjeto> findByIdTipoObjeto(final Integer idTipoObjeto) {
         if (this.em != null && idTipoObjeto != null) {
-            Query q = em.createNamedQuery("TipoObjeto.findByIdTipoObjeto");
-            q.setParameter("idTipoObjeto", idTipoObjeto);
+            Query q = em.createNamedQuery("TipoObjeto.findByIdTipoObjetoLike");
+            q.setParameter("idTipoObjeto", "%"+idTipoObjeto+"%");
             return q.getResultList();
 
         }

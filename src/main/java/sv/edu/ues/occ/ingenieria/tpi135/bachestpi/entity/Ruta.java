@@ -28,6 +28,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Ruta.findAll", query = "SELECT r FROM Ruta r"),
     @NamedQuery(name = "Ruta.findByIdRuta", query = "SELECT r FROM Ruta r WHERE r.idRuta = :idRuta"),
+    @NamedQuery(name = "Ruta.findByIdRutaLike", query = "SELECT r FROM Ruta r WHERE CAST(r.idRuta AS VARCHAR) LIKE :idRuta"),
     @NamedQuery(name = "Ruta.findByNombre", query = "SELECT r FROM Ruta r WHERE r.nombre = :nombre"),
     @NamedQuery(name = "Ruta.findByFechaCreacion", query = "SELECT r FROM Ruta r WHERE r.fechaCreacion = :fechaCreacion"),
     @NamedQuery(name = "Ruta.findByObservaciones", query = "SELECT r FROM Ruta r WHERE r.observaciones = :observaciones")})

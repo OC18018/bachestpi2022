@@ -36,8 +36,8 @@ public class EstadoBean extends abstractDataAccess<Estado> implements Serializab
 
     public List<Estado> findByIdEstado(final Integer idEstado) {
         if (this.em != null && idEstado != null) {
-            Query q = em.createNamedQuery("Estado.findByIdEstado");
-            q.setParameter("idEstado", idEstado);
+            Query q = em.createNamedQuery("Estado.findByIdEstadoLike");
+            q.setParameter("idEstado", "%"+idEstado+"%");
             return q.getResultList();
 
         }

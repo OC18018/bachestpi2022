@@ -38,8 +38,8 @@ public class RutaBean extends abstractDataAccess<Ruta> implements Serializable {
 
         public List<Ruta> findByIdRuta(final Long idRuta) {
         if (this.em != null && idRuta != null) {
-            Query q = em.createNamedQuery("Ruta.findByIdRuta");
-            q.setParameter("idRuta", idRuta);
+            Query q = em.createNamedQuery("Ruta.findByIdRutaLike");
+            q.setParameter("idRuta", "%"+idRuta+"%");
             return q.getResultList();
 
         }

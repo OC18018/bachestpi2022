@@ -31,6 +31,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Objeto.findAll", query = "SELECT o FROM Objeto o"),
     @NamedQuery(name = "Objeto.findByIdObjeto", query = "SELECT o FROM Objeto o WHERE o.idObjeto = :idObjeto"),
+    @NamedQuery(name = "Objeto.findByIdObjetoLike", query = "SELECT o FROM Objeto o WHERE CAST(o.idObjeto AS VARCHAR) LIKE :idObjeto"),
     //Tema de Clase
     @NamedQuery(name = "Objeto.findByTipoObjeto", query = "SELECT o FROM Objeto o WHERE o.idTipoObjeto = :idTipoObjeto ORDER BY o.nombre ASC"),
     @NamedQuery(name = "Objeto.countByTipoObjeto", query = "SELECT COUNT(o.idObjeto) FROM Objeto o JOIN o.idTipoObjeto t WHERE t.idTipoObjeto= :idTipoObjeto"),
