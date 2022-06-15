@@ -7,6 +7,7 @@ package sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,6 +52,7 @@ public class Estado implements Serializable {
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
     @OneToMany(mappedBy = "idEstado")
+    
     private List<ObjetoEstado> objetoEstadoList;
 
     public Estado() {
@@ -91,7 +93,7 @@ public class Estado implements Serializable {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-
+    @JsonbTransient
     public List<ObjetoEstado> getObjetoEstadoList() {
         return objetoEstadoList;
     }

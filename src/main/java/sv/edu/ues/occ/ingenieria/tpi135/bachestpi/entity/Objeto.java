@@ -7,6 +7,7 @@ package sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -117,7 +118,7 @@ public class Objeto implements Serializable {
     public void setIdTipoObjeto(TipoObjeto idTipoObjeto) {
         this.idTipoObjeto = idTipoObjeto;
     }
-
+    @JsonbTransient
     public List<ObjetoEstado> getObjetoEstadoList() {
         return objetoEstadoList;
     }

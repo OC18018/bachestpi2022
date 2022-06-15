@@ -7,6 +7,7 @@ package sv.edu.ues.occ.ingenieria.tpi135.bachestpi.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -78,6 +79,7 @@ public class TipoObjeto implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
+    @JsonbTransient
     public List<Objeto> getObjetoList() {
         return objetoList;
     }

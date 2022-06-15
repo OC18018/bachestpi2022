@@ -30,6 +30,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "ObjetoEstado.findAll", query = "SELECT o FROM ObjetoEstado o"),
     @NamedQuery(name = "ObjetoEstado.findByIdObjetoEstado", query = "SELECT o FROM ObjetoEstado o WHERE o.idObjetoEstado = :idObjetoEstado"),
+    @NamedQuery(name = "ObjetoEstado.findByIdObjetoEstadoLike", query = "SELECT o FROM ObjetoEstado o WHERE CAST(o.idObjetoEstado AS VARCHAR) LIKE :idObjetoEstado"),
     @NamedQuery(name = "ObjetoEstado.findByActual", query = "SELECT o FROM ObjetoEstado o WHERE o.actual = :actual"),
     @NamedQuery(name = "ObjetoEstado.findByFechaAlcanzado", query = "SELECT o FROM ObjetoEstado o WHERE o.fechaAlcanzado = :fechaAlcanzado"),
     @NamedQuery(name = "ObjetoEstado.findByObservaciones", query = "SELECT o FROM ObjetoEstado o WHERE o.observaciones = :observaciones")})

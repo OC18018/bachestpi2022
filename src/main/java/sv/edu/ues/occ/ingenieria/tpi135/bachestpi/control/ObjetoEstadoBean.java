@@ -37,8 +37,8 @@ public class ObjetoEstadoBean extends abstractDataAccess<ObjetoEstado> implement
 
     public List<ObjetoEstado> findByIdObjetoEstado(final Long idObjetoEstado) {
         if (this.em != null && idObjetoEstado != null) {
-            Query q = em.createNamedQuery("ObjetoEstado.findByIdObjetoEstado");
-            q.setParameter("idObjetoEstado", idObjetoEstado);
+            Query q = em.createNamedQuery("ObjetoEstado.findByIdObjetoEstadoLike");
+            q.setParameter("idObjetoEstado", "%"+idObjetoEstado+"%");
             return q.getResultList();
 
         }
